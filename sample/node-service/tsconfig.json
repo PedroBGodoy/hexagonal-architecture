@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "experimentalDecorators": true,
+    "module": "ES2020",
+    "rootDir": "./src",
+    "baseUrl": "./src",
+    "paths": {
+      "@application/*": ["application/*"],
+      "@adapters/*": ["adapters/*"],
+    },
+    "moduleResolution": "Node",
+    "outDir": "./dist",
+    "removeComments": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true
+  }
+}
