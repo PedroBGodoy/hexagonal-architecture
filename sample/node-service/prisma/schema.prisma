@@ -1,0 +1,49 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model CreditCard {
+  id              String   @id @default(cuid())
+  number          String
+  expirationMonth Int
+  expirationYear  Int
+  balance         Float
+  limit           Float
+  cvv             Int
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  Transaction Transaction[]
+  @@unique([number])
+  @@index([createdAt])
+  @@index([expirationMonth])
+  @@index([expirationYear])
+}
+
+model Transaction {
+  id           Int               @id @default(autoincrement())
+  amount       Float
+  description  String
+  creditCard   CreditCard        @relation(fields: [creditCardId], references: [id])
+  creditCardId String
+  status       TransactionStatus @relation(fields: [statusId], references: [id])
+  statusId     Int
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+  error        String?
+
+  @@index([createdAt])
+  @@index([creditCardId])
+  @@index([statusId])
+}
+
+model TransactionStatus {
+  id          Int           @id @default(autoincrement())
+  Transaction Transaction[]
+  name        String
+}
