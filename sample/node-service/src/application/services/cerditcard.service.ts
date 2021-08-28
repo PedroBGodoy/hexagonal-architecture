@@ -11,11 +11,13 @@ export class CreditCardServiceImpl implements CreditCardServicePort {
 
   async getCreditCardById (id: string): Promise<CreditCard> {
     const card = await this.creditcardRepository.getById(id)
+    if (!card) throw new Error('Card not found!')
     return card
   }
 
   async getBalance (id: string): Promise<number> {
     const card = await this.creditcardRepository.getById(id)
+    if (!card) throw new Error('Card not found!')
     return card.getBalance()
   }
 }
